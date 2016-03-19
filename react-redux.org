@@ -55,7 +55,6 @@ let store = createStore(counter)
 store.subscribe(() =>
   console.log(store.getState())
 )
-
 // The only way to mutate the internal state is to dispatch an action.
 // The actions can be serialized, logged or stored and later replayed.
 store.dispatch({ type: 'INCREMENT' })
@@ -70,4 +69,10 @@ store.dispatch({ type: 'DECREMENT' })
 如果你之前用过flux， 有一个非常重要的不同点你需要小心。redux并没有Dispatcher，也不支持许多的stores，它仅有一个store和一个根reducer 函数。随着你的程序不断变大，你需要把根reducer拆分成许多小的独立的reducer 操作state树的不同部分，而不是添加stores，仿佛在react 程序中只有一个根组件，但他由许多小组件组成。
 这种架构可能对于一个计数应用来说有点过量了，但这种模式的美妙之处在于应对大体量，复杂的应用。它也能开启强大的开发者工具，因为它可以跟踪每一个action的改变。你可以记录用户的session，重新运行每个action来重现过程。
 
-
+* 介绍
+** 动机
+随着JS单页应用变得越来越复杂，我们的代码必须管理比以往任何时候都多的state。这些状态包括服务器回应，缓存数据，还有本地创建的还未被服务器永久保存的数据。UI的state也越来越复杂，比如我们需要管理激活的路径，选中的tab，是否显示spinner，是否显示分页控制等等。
+管理这些不断变化的state是困难的，如果一个model可以更新另一个model，那么一个view可以更新一个model，然后这个model再去更新另一个model，被更新的model又可能会引起另一个view更新。在某一时刻，你不再明白你的app在发生什么，因为你已经失去了对state的控制。当一个系统是不透明的混沌系统，也就很难重现bug，和添加新功能。
+这些还不是最坏的， 考虑一下在前端产品开发，新的需求越来越多。作为开发者，我们被期望控制所有优化更新，服务器端渲染，在路径转换前获取数据，等等。我们发现我们在试图控制一个我们从未处理过的困难，我们必然会问“是不是该放弃了”，答案是“不”。
+这些复杂度很难掌控因为我们混淆了2个概念：转变和异步。我称他们是“曼妥思和可乐”（这是两种放在一起回产生剧烈反应的食品，可乐中加入曼妥思之后会瞬间产生大量气体）。这两样东西可以分别产生很棒的效果，但放在一起就会搞乱事情，React一类的库试图解决这个问题，通过在view层移除异步和直接DOM操作，然而管理你的数据的state的工作被留给了你自己。这就是Redux要替你解决的问题。
+包含了Flux，CQRS和Event Sourcing的思想，Redux试图通过限制更新的发生时间和方式来让state的转变变得可预测。这些限制反应在Redux的三大原则上。
