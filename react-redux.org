@@ -66,3 +66,8 @@ store.dispatch({ type: 'DECREMENT' })
 // 1
 
 #+end_src
+并非直接修改state， 你需要将你希望发生的改变写进一个普通对象即 actions。然后你写一个的函数来描述具体每一个action怎样转换整个应用程序的state，即reducer。
+如果你之前用过flux， 有一个非常重要的不同点你需要小心。redux并没有Dispatcher，也不支持许多的stores，它仅有一个store和一个根reducer 函数。随着你的程序不断变大，你需要把根reducer拆分成许多小的独立的reducer 操作state树的不同部分，而不是添加stores，仿佛在react 程序中只有一个根组件，但他由许多小组件组成。
+这种架构可能对于一个计数应用来说有点过量了，但这种模式的美妙之处在于应对大体量，复杂的应用。它也能开启强大的开发者工具，因为它可以跟踪每一个action的改变。你可以记录用户的session，重新运行每个action来重现过程。
+
+
