@@ -76,3 +76,57 @@ store.dispatch({ type: 'DECREMENT' })
 这些还不是最坏的， 考虑一下在前端产品开发，新的需求越来越多。作为开发者，我们被期望控制所有优化更新，服务器端渲染，在路径转换前获取数据，等等。我们发现我们在试图控制一个我们从未处理过的困难，我们必然会问“是不是该放弃了”，答案是“不”。
 这些复杂度很难掌控因为我们混淆了2个概念：转变和异步。我称他们是“曼妥思和可乐”（这是两种放在一起回产生剧烈反应的食品，可乐中加入曼妥思之后会瞬间产生大量气体）。这两样东西可以分别产生很棒的效果，但放在一起就会搞乱事情，React一类的库试图解决这个问题，通过在view层移除异步和直接DOM操作，然而管理你的数据的state的工作被留给了你自己。这就是Redux要替你解决的问题。
 包含了Flux，CQRS和Event Sourcing的思想，Redux试图通过限制更新的发生时间和方式来让state的转变变得可预测。这些限制反应在Redux的三大原则上。
+** 三大原则
+Redux可以通过三个主要原则来描述
+*** 单一源头的事实
+
+
+    
+* API
+** Provider stored
+<Provider>让Redux的store可以在组件层次结构里被connect调用，正常情况下，如果不在<Provider>里封装根组件，你是不能使用connect的
+如果真的有必要，你可以手动传递prop到每一个被connect连接的组件里，但我们只推荐你在单元测试的时候传递store的备份。或者在非完全Reac风格的代码库里。通常你都要使用<Provider>
+** Props(2个属性）
+1. store （Redux Store）：单一Redux store在你的应用程序里。
+2. children（react元素）：你的组件架构的根。
+** 例子
+Vanilla React
+#+begin_src js
+ReactDOM.render(
+  <Provider store={store}>
+    <MyRootComponent />
+  </Provider>,
+  rootEl
+)
+#+end_src
+React Router 0.13
+#+begin_src js
+Router.run(routes, Router.HistoryLocation, (Handler, routerState) => { // note "routerState" here
+  ReactDOM.render(
+    <Provider store={store}>
+      {/* note "routerState" here: important to pass it down */}
+      <Handler routerState={routerState} />
+    </Provider>,
+    document.getElementById('root')
+  )
+})
+#+end_src
+React Router 1.0
+#+begin_src js
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={history}>...</Router>
+  </Provider>,
+  targetEl
+)
+#+end_src
+** connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+连接一个React组件到Redux的store上。
+它没有修改传递过来的组件类。而是他返回了一个新的，被连接的组件类供你使用。
+*** 参数
+- [mapStateToProps(state, [ownProps]): stateProps](Function): 这个组件将订阅Redux的store更新。任何时候store更新，mapStateToProps都会被调用。他的结果必须是一个普通对象。他讲被整合到组件的props里。如果你省略这个参数，组件就不会订阅Redux的store更新。如果ownProps作为第二个参数非空，它的值就会作为props传递到你的组件里， 并且只要组件获得新的props，mapStateToProps就会被再次调用。
+  + 注意：高级场景里，你需要更精细的控制渲染性能，mapStateToProps也可以返回一个函数，这个函数将会被用作特殊的组件实例，他可以让你做实例化之前的存储。你可以参考[[https://github.com/reactjs/react-redux/pull/279][#279]] 及其添加的测试用例，大部分app都不会使用这个特性。
+- [mapDispatchToProps(dispatch, [ownProps]): dispatchProps](Object or Function):如果传来的是对象，它所包含的每个function都被认为是一个Redux的action创建者。一个对象带有一些函数名，但每个action 创建者都封装在dispa调用里，所以他们可以被直接调用，被整合到组件的props里。如果传来的是一个函数，它将是给定的dispatch。这取决于你去返回一个对象如何
+- 
+- 
+- 
