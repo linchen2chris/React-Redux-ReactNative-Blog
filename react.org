@@ -1,0 +1,85 @@
+* 案例学习
+我们将构建一个简单实用的评论箱，你可以把它放到博客里。并提供实时评论。
+我们将提供：
+- 一个查看全部评论的视图
+- 一个提交评论的表单
+- 为你提供自定义后台的接口
+它也有一些整洁的特性：
+- 优化的评论： 评论在被保存到服务器之前就会在页面上列出来，这样会显得很快。
+- 实时更新：其他用户的评论会实时的跳进来
+- Markdown格式：用户可以用markdown来格式化他们的文本。
+
+** 想跳过所有的直接看全部源代码？
+[[https://github.com/reactjs/react-tutorial][全部在github上]]
+** 注释： 下面是我的源代码简单研读：
+主要是两个源文件：server.js和example.js。
+*** [[file:~/Desktop/chris_javascript/react_tutorial/server.js][server.js]]
+主要是nodejs，express提供的文件存储，读取的后台数据api，demo没有使用数据库，而是使用了简单的json文件来做数据存储。
+主要提供了2个api， get所有的comments和post一批comments。
+*** [[file:~/Desktop/chris_javascript/react_tutorial/public/scripts/example.js][example.js]] 
+Comment类作为一个评论实体。
+CommentList类用来列出所有的Comments
+CommentForm类处理一个comment的提交表单。
+CommentBox把所有的封装起来，处理数据交互逻辑。
+
+** 运行server
+为了运行这个例子，我们将需要一个运行的server。它将提供API端为我们获取和传递数据。为了尽量简化，我们创建一个几行脚本语言就完成的简单服务器。你可以看server.js的代码。
+为了简化，运行的server使用json文件来做存储数据库。你不应该在生产环境运行它，但这很简单地模拟了你想做的。当你开启服务器，它会提供API端和我们需要的静态页面。
+** 开始
+这个案例里我们将尽量简化他，我们用一个HTML文件来引入我们前面讨论的服务器包。打开 /public/index.html，
+#+BEGIN_SRC js
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>React Tutorial</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel" src="scripts/example.js"></script>
+    <script type="text/babel">
+      // To get started with this tutorial running your own code, simply remove
+      // the script tag loading scripts/example.js and start writing code here.
+    </script>
+  </body>
+</html>
+#+END_SRC
+本文余下部分，我们在script标签下写JS代码。我们没有使用任何先进的实时重载技术，所以，你需要手动刷新你的浏览器来看更新。打开浏览器输入 *http://localhost:3000* （在开启server之后），当你第一次不做任何修改载入时，你会看到我们想构建的完成后的产品。你想开始工作时，只需删掉预先放置的<script>标签即可。
+:: 注意
+我们使用了JOuery来简化ajax调用，但这并不是react必须的选择。
+
+** 第一个组件
+React全是模块化的，组件化的组件。对于我们的评论箱，我们需要以下组件
+- CommentBox
+  - CommentList
+    - Comment
+- CommentForm
+让我们来构建CommentBox组件。他是个简单的<div>:
+#+BEGIN_SRC js
+// tutorial1.js
+var CommentBox = React.createClass({
+  render: function() {
+    return (
+      <div className="commentBox">
+        Hello, world! I am a CommentBox.
+      </div>
+    );
+  }
+});
+ReactDOM.render(
+  <CommentBox />,
+  document.getElementById('content')
+);
+#+END_SRC
+
+
+
+
+
+

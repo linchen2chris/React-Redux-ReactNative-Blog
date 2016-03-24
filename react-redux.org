@@ -126,7 +126,5 @@ ReactDOM.render(
 *** 参数
 - [mapStateToProps(state, [ownProps]): stateProps](Function): 这个组件将订阅Redux的store更新。任何时候store更新，mapStateToProps都会被调用。他的结果必须是一个普通对象。他讲被整合到组件的props里。如果你省略这个参数，组件就不会订阅Redux的store更新。如果ownProps作为第二个参数非空，它的值就会作为props传递到你的组件里， 并且只要组件获得新的props，mapStateToProps就会被再次调用。
   + 注意：高级场景里，你需要更精细的控制渲染性能，mapStateToProps也可以返回一个函数，这个函数将会被用作特殊的组件实例，他可以让你做实例化之前的存储。你可以参考[[https://github.com/reactjs/react-redux/pull/279][#279]] 及其添加的测试用例，大部分app都不会使用这个特性。
-- [mapDispatchToProps(dispatch, [ownProps]): dispatchProps](Object or Function):如果传来的是对象，它所包含的每个function都被认为是一个Redux的action创建者。一个对象带有一些函数名，但每个action 创建者都封装在dispa调用里，所以他们可以被直接调用，被整合到组件的props里。如果传来的是一个函数，它将是给定的dispatch。这取决于你去返回一个对象如何
-- 
-- 
-- 
+- [mapDispatchToProps(dispatch, [ownProps]): dispatchProps](Object or Function):如果传来的是对象，它所包含的每个function都被认为是一个Redux的action创建者。一个对象带有一些函数名，但每个action 创建者都封装在dispatch调用里，所以他们可以被直接调用，被整合到组件的props里。如果传来的是一个函数，它将是给定的dispatch。这取决于你返回的对象如何使用dispatch去
+
