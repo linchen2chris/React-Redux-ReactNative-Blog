@@ -77,6 +77,209 @@ ReactDOM.render(
   document.getElementById('content')
 );
 #+END_SRC
+注意原生html元素的名字都以小写字母开头，但自定义的React类名字以大写字母开头，
+** JSX语法：
+首先你注意到的是XML风格的语法在你的JS里，我们有一个简单的预编译器把这些语法糖转化成普通的js。
+被转化成的js code
+#+BEGIN_SRC js -n
+// tutorial1-raw.js
+var CommentBox = React.createClass({displayName: 'CommentBox',
+  render: function() {
+    return (
+      React.createElement('div', {className: "commentBox"},
+        "Hello, world! I am a CommentBox."
+      )
+    );
+  }
+});
+ReactDOM.render(
+  React.createElement(CommentBox, null),
+  document.getElementById('content')
+);
+#+END_SRC
+使用jsx语法不是必须的，你可以做选择，但我们发现jsx语法比不同js更容易使用，[[https://facebook.github.io/react/docs/jsx-in-depth.html][这里]]可以读到更多JSX语法文件。
+
+** 发生了什么
+我们在js对象里传递一些方法到React.createClass()里去创建一个React组件。这些方法里最重要的是一个叫 *render* 的方法。它返回一个React组件树，最终会被渲染成HTML。
+<div>标签并非实际的DOM节点，他们是React的<div>组件的实例，你可以把这些看做是React可以处理的符号或数据块，React是安全的，我们不会生成HTML字符串，所以会默认有XSS保护。
+你不需要返回基本HTML， 你可以返回一棵全是自己创建的组件树，正是这一点使得React是 *组件化* ：这是可维护前端的一个关键信条。
+ReactDOM.render() 实例化根组件，启动框架，并且根据第二个参数把这些标记注入成原生DOM元素。
+ReactDOM模块提供DOM相关的方法，而React模块为React及其相关平台提供和谐工具集（如React-Native，使用react框架来写ios和android原生应用）
+把ReactDOM.render放在脚本的最后是非常重要的，ReactDOM.render 应该在组件定义之后被调用。
+** Composing 组件
+下面来构建 *CommentList* 和 *CommentForm"的框架。他们还是简单的<div>. 添加这两个组件到你的文件里，保持已有的CommentBox声明和ReactDOM.render调用。
+#+BEGIN_SRC js -n
+// tutorial2.js
+var CommentList = React.createClass({
+  render: function() {
+    return (
+      <div className="commentList">
+        Hello, world! I am a CommentList.
+      </div>
+    );
+  }
+});
+
+var CommentForm = React.createClass({
+  render: function() {
+    return (
+      <div className="commentForm">
+        Hello, world! I am a CommentForm.
+      </div>
+    );
+  }
+});
+#+END_SRC
+接下来，用这些新组建更新CommentBox组件。
+#+BEGIN_SRC js -n
+// tutorial3.js
+var CommentBox = React.createClass({
+  render: function() {
+    return (
+      <div className="commentBox">
+        <h1>Comments</h1>
+        <CommentList />
+        <CommentForm />
+      </div>
+    );
+  }
+});
+#+END_SRC
+注意我们是怎么混合html标签和组件的。HTML组件是普通React组件，和你自定义的组件一样，唯一不同的是JSX编译器自动重写HTML标签到React.createElement(tagName)语句，和其他所有的东西都隔离开。这样是为了避免全局命名空间的污染。
+** 使用porps
+我们创建Comment组件，会依赖福组件传来的数据。从父组件传入的数据，子组件可以通过'Property'来访问.这些'Property'存在this.props. 使用props,我们能读取从CommentList传来Comment的数据,并渲染一些符号:
+#+BEGIN_SRC js -n
+// tutorial4.js
+var Comment = React.createClass({
+  render: function() {
+    return (
+      <div className="comment">
+        <h2 className="commentAuthor">
+          {this.props.author}
+        </h2>
+        {this.props.children}
+      </div>
+    );
+  }
+});
+#+END_SRC
+JSX里把JS语句括在大括号里（像一个属性或一个子语句, 你可以丢文本或者React组件到标签树上.我们获取通过this.props来获取传来的命名属性,通过this.props.children来获取任何封装元素.
+** 组件属性
+现在我们有定义好的Comment组件,我们想传进作者名字和评论文本. 我们可以在每一个不同的评论重用相同代码,我们来给CommentList加一些评论。
+#+BEGIN_SRC js -n
+// tutorial5.js
+var CommentList = React.createClass({
+  render: function() {
+    return (
+      <div className="commentList">
+        <Comment author="Pete Hunt">This is one comment</Comment>
+        <Comment author="Jordan Walke">This is *another* comment</Comment>
+      </div>
+    );
+  }
+});
+#+END_SRC
+我们从父组件CommentList给子组件Comment传入了一些数据。例如我们传入Pete Hunt（属性），这是一个Comment（通过XML类似的子节点）。
+** 添加Markdown支持
+Markdown是最简单的方法来格式化内嵌文本的，例如用星号包裹的文本会被加粗。
+我们用了第三方库 *marked* 来把markdown格式的文本转换成原生HTML。我们已经添加了这个库，所有直接使用就可以了。我们来转换并输出它。
+#+BEGIN_SRC js -n
+// tutorial6.js
+var Comment = React.createClass({
+  render: function() {
+    return (
+      <div className="comment">
+        <h2 className="commentAuthor">
+          {this.props.author}
+        </h2>
+        {marked(this.props.children.toString())}
+      </div>
+    );
+  }
+#+END_SRC
+我们做的只是直接使用这个库,我们需要把this.props.children从React封装文本转换成原始字符串,所以我们要调用toString()方法.
+但有一个问题! 我们的渲染的评论在浏览器里大概是这样:"<p>This is <em>another</em> comment</p>".我们想这些标签可以确切地渲染成HTML.这是为了防止你遭受XSS 攻击，有个方法可以避免，但框架会警告你不要使用它。
+#+BEGIN_SRC js -n
+// tutorial7.js
+var Comment = React.createClass({
+  rawMarkup: function() {
+    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
+    return { __html: rawMarkup };
+  },
+
+  render: function() {
+    return (
+      <div className="comment">
+        <h2 className="commentAuthor">
+          {this.props.author}
+        </h2>
+        <span dangerouslySetInnerHTML={this.rawMarkup()} />
+      </div>
+    );
+  }
+});
+#+END_SRC
+这个特别的API故意让插入原始HTML变得困难。但对于marked库，我们会故意利用这个后门。
+记住： 使用这个特性，你将依靠marked来保证安全。这个例子里，我们传入 =sanitize: true= 告诉marked 跳过源代码里的任何HTML符号, 而不是不加修改地全部传进去.
+** 连接数据模型
+目前为止, 我们已经在源码直接插入评论, 我们要渲染一个一团JSON数据到评论列表中，实际上这些应该来自于服务器，为了简化现在我们把json手写进代码里。
+#+BEGIN_SRC js -n
+// tutorial8.js
+var data = [
+  {id: 1, author: "Pete Hunt", text: "This is one comment"},
+  {id: 2, author: "Jordan Walke", text: "This is *another* comment"}
+];
+#+END_SRC
+我们需要用模块化的方法把这些数据获取进评论列表里。修改 =CommentBox= 和 =ReactDOM.render()= 方法,通过props传入这些数据到 =CommentList= 里.
+#+BEGIN_SRC js -n
+// tutorial9.js
+var CommentBox = React.createClass({
+  render: function() {
+    return (
+      <div className="commentBox">
+        <h1>Comments</h1>
+        <CommentList data={this.props.data} />
+        <CommentForm />
+      </div>
+    );
+  }
+});
+
+ReactDOM.render(
+  <CommentBox data={data} />,
+  document.getElementById('content')
+);
+#+END_SRC
+现在，这些数据可以在 =CommentList= 中使用了， 我们可以动态渲染这些评论了。
+#+BEGIN_SRC js -n
+// tutorial10.js
+var CommentList = React.createClass({
+  render: function() {
+    var commentNodes = this.props.data.map(function(comment) {
+      return (
+        <Comment author={comment.author} key={comment.id}>
+          {comment.text}
+        </Comment>
+      );
+    });
+    return (
+      <div className="commentList">
+        {commentNodes}
+      </div>
+    );
+  }
+});
+#+END_SRC
+就这样。
+
+** 从服务器获取数据
+现在我们用服务器获取的动态数据来替换写死的数据，我们删除data属性，替换成URL来获取
+#+BEGIN_SRC 
+
+#+END_SRC
+
+
+
 
 
 
