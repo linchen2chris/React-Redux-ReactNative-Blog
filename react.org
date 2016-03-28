@@ -274,15 +274,114 @@ var CommentList = React.createClass({
 
 ** 从服务器获取数据
 现在我们用服务器获取的动态数据来替换写死的数据，我们删除data属性，替换成URL来获取
-#+BEGIN_SRC 
-
+#+BEGIN_SRC js -n
+// tutorial11.js
+ReactDOM.render(
+  <CommentBox url="/api/comments" />,
+  document.getElementById('content')
+);
 #+END_SRC
+这个组件不同于之前的，他需要重渲染自己。组件没有任何数据，直到它向服务器请求到数据，这时，这个组件需要去渲染一些新组件。
+>注意：现在这些代码还不能正常工作
+** React的state
+目前为止，基于props，每个组件都已经渲染他自己，props不可改变，它从父组件传来，被父组件拥有，为了实现交互，我们引入组件可变的 *state* 。=this.state= 是组件私有的，可以通过this.setState() 来改变。当state更新，组件就会重新渲染。
+render方法是this.props和this.state的函数，框架保证UI始终和输入一致。
+当服务器获取数据，我们将修改评论数据，让我们来添加一组评论数据作为state到评论箱中。
+#+BEGIN_SRC js
+// tutorial12.js
+var CommentBox = React.createClass({
+  getInitialState: function() {
+    return {data: []};
+  },
+  render: function() {
+    return (
+      <div className="commentBox">
+        <h1>Comments</h1>
+        <CommentList data={this.state.data} />
+        <CommentForm />
+      </div>
+    );
+  }
+});
+#+END_SRC
+getInitialState() 在组件生命周期内仅会执行一次，设置组件的初始状态。
 
+*** 更新state
+当组件第一次被创建，我们想从服务器上GET一些JSON数据，并更新state以反映最新的数据。我们将用JQuery框架来向服务器发送异步请求我们需要的数据，数据包含在common.json中,一旦获取,this.state.data看起来会想这样
+#+BEGIN_SRC js
+[
+  {"author": "Pete Hunt", "text": "This is one comment"},
+  {"author": "Jordan Walke", "text": "This is *another* comment"}
+]
+#+END_SRC
+#+BEGIN_SRC js
+// tutorial13.js
+var CommentBox = React.createClass({
+  getInitialState: function() {
+    return {data: []};
+  },
+  componentDidMount: function() {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  render: function() {
+    return (
+      <div className="commentBox">
+        <h1>Comments</h1>
+        <CommentList data={this.state.data} />
+        <CommentForm />
+      </div>
+    );
+  }
+});
+#+END_SRC
+componentDidMount会在组件第一次渲染之后被自动调用。动态更新的关键是调用this.setState(), 我们用新数组替换旧的,UI就会随之自动更新。因为这个相关性，它只是一个小改变去添加实时更新，我们这里将用简单的ajax获取但你可以更简单的websockets或其他技术。
+#+BEGIN_SRC js
+// tutorial14.js
+var CommentBox = React.createClass({
+  loadCommentsFromServer: function() {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  getInitialState: function() {
+    return {data: []};
+  },
+  componentDidMount: function() {
+    this.loadCommentsFromServer();
+    setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+  },
+  render: function() {
+    return (
+      <div className="commentBox">
+        <h1>Comments</h1>
+        <CommentList data={this.state.data} />
+        <CommentForm />
+      </div>
+    );
+  }
+});
 
-
-
-
-
-
-
-
+ReactDOM.render(
+  <CommentBox url="/api/comments" pollInterval={2000} />,
+  document.getElementById('content')
+);
+#+END_SRC
+这里我们只是把ajax调用单独放到一个函数,当组件首次加载,之后每隔2s就重新调用它.在你的浏览器里运行它,并修改你的json文件,每隔2s,这些改变就会出现在页面上.
