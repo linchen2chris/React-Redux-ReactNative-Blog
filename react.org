@@ -385,3 +385,106 @@ ReactDOM.render(
 );
 #+END_SRC
 这里我们只是把ajax调用单独放到一个函数,当组件首次加载,之后每隔2s就重新调用它.在你的浏览器里运行它,并修改你的json文件,每隔2s,这些改变就会出现在页面上.
+*** 添加新的评论
+现在可以构建表单了,评论表单组件应该输入评论者姓名和评论内容来向服务器发送请求存储这条评论.
+#+BEGIN_SRC js
+// tutorial15.js
+var CommentForm = React.createClass({
+  render: function() {
+    return (
+      <form className="commentForm">
+        <input type="text" placeholder="Your name" />
+        <input type="text" placeholder="Say something..." />
+        <input type="submit" value="Post" />
+      </form>
+    );
+  }
+});
+#+END_SRC
+受控的组件
+传统DOM里， =input= 元素被呈现，浏览器管理他的 =state= （也就是他索要渲染的值）结果实际DOM的state可能与组件里保存的state不同.这不理想,因为视图的state与组件的状态不同. 在React里,组件应该始终代表试图的state, 而不仅仅在初始化的时刻.
+因此,我们将用this.state来存储用户的输入.我们用 =author= 和 =text= 两个内容为空字符串的属性定义一个初始化的state.在<input>元素中,我们设置 =value= 属性来反应组件状态,并且绑定 ~onChange~ 回调函数, 这些<input> 元素带有一个设定的值 被称为受控组件. 关于更多受控组件的信息可以读[[https://facebook.github.io/react/docs/forms.html#controlled-components][这里]]
+#+BEGIN_SRC js
+// tutorial16.js
+var CommentForm = React.createClass({
+  getInitialState: function() {
+    return {author: '', text: ''};
+  },
+  handleAuthorChange: function(e) {
+    this.setState({author: e.target.value});
+  },
+  handleTextChange: function(e) {
+    this.setState({text: e.target.value});
+  },
+  render: function() {
+    return (
+      <form className="commentForm">
+        <input
+          type="text"
+          placeholder="Your name"
+          value={this.state.author}
+          onChange={this.handleAuthorChange}
+        />
+        <input
+          type="text"
+          placeholder="Say something..."
+          value={this.state.text}
+          onChange={this.handleTextChange}
+        />
+        <input type="submit" value="Post" />
+      </form>
+    );
+  }
+});
+#+END_SRC
+*** 事件
+React 对绑定组件的事件用驼峰命名法。我们绑定onChange回调函数到两个<input>元素,现在,当用户录入文本到<input>区域绑定的onChange回调函数会被触发,组件的state会被修改,随即,input元素的渲染值会被更新以反映当前组件的state.
+*** 提交组件
+我们来让组件可交互，当用户提交组件，我们应该清楚它，提交请求到服务器 并刷新评论列表。我们收听组件提交时间并清理它.
+#+BEGIN_SRC js
+// tutorial17.js
+var CommentForm = React.createClass({
+  getInitialState: function() {
+    return {author: '', text: ''};
+  },
+  handleAuthorChange: function(e) {
+    this.setState({author: e.target.value});
+  },
+  handleTextChange: function(e) {
+    this.setState({text: e.target.value});
+  },
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var author = this.state.author.trim();
+    var text = this.state.text.trim();
+    if (!text || !author) {
+      return;
+    }
+    // TODO: send request to the server
+    this.setState({author: '', text: ''});
+  },
+  render: function() {
+    return (
+      <form className="commentForm" onSubmit={this.handleSubmit}>
+        <input
+          type="text"
+          placeholder="Your name"
+          value={this.state.author}
+          onChange={this.handleAuthorChange}
+        />
+        <input
+          type="text"
+          placeholder="Say something..."
+          value={this.state.text}
+          onChange={this.handleTextChange}
+        />
+        <input type="submit" value="Post" />
+      </form>
+    );
+  }
+});
+#+END_SRC
+我们在表单上绑定一个onSubmit回调函数并且在提交表单的时候清除表单域。
+对事件调用 =preventDefault= 是为了阻止浏览器在提交表单时的默认行为。
+*** 回调作为属性
+当用户提交评论，我们将需要刷新评论列表以包含这个信提交的评论。这
