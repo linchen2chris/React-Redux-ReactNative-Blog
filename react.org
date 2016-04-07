@@ -489,7 +489,7 @@ var CommentForm = React.createClass({
 *** 回调作为属性
 当用户提交评论，我们将需要刷新评论列表以包含这个信提交的评论。这些逻辑应该写在 =CommentBox= 里，因为CommentBox拥有表示评论列表的state。
 我们需要传递数据从子组件回到他的父组件。我们在父组件的render方法里通过传递一个新的回调函数到子组件中,绑定到子组件的 =onCommentSubmit= 方法上.只有事件触发,回调就会被唤起。
-#+BEGIN_SRC json
+#+BEGIN_SRC js
 // tutorial18.js
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
