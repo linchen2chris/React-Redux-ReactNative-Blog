@@ -1,3 +1,4 @@
+#+HTML_HEAD: <link href="./theme.css" rel="stylesheet">
 * 每日总结
 ** <2016-04-11 Mon> 
    今天来更新一组的checkbox，把更新后的checkbox的值存到一个数组来更新数据库。如下图
