@@ -1,4 +1,62 @@
 * 每日总结
 ** <2016-04-11 Mon> 
-今天来更新一组的checkbox，把更新后的checkbox的值存到一个数组来更新数据库。如下图[[file:screenshot/2016-04-11-1.png][病症的Checkbox]]
+   今天来更新一组的checkbox，把更新后的checkbox的值存到一个数组来更新数据库。如下图
+[[file:2016-4-11.org_imgs/20160411_192442_92923GoO.png]]
 
+*** 几个难点：
+**** 刚开始时数据库来的数组怎么显示出来？
+数据结构如下：
+#+BEGIN_SRC js
+followupRecord：{
+symptoms: []
+}
+#+END_SRC
+state的结构如下：
+#+BEGIN_SRC 
+state = {
+followupRecord: {},
+symptoms: [], // =state= 首先初始化为空 []。保证了第一次render。
+}
+#+END_SRC
+然后从后台fetch followupRecord的数据.此时symptoms可能有数据也可能还是[], 
+#+BEGIN_SRC js
+this.setState({
+  followupRecord: response.data,
+  diagnosis: response.data.diagnosis || {},
+  order: response.data.order || {},
+  symptoms: response.data.symptoms || []  // 第二次render []或者后台数据. 也保证不会undefined.
+});
+#+END_SRC
+
+在render()里, symptoms 从state里去取.
+#+BEGIN_SRC js
+    const {collection, columns, followupRecord, diagnosis, order, symptoms} = this.state;
+#+END_SRC
+
+之所以要把symptoms从followupRecord里分离出来, 主要是后面他需要单独传到后台去更新followupRecord的一部分. 而且放在followupRecord里, 每次取的时候都要去数据结构很深的地方去取.
+#+BEGIN_SRC 
+checked={symptoms.indexOf(Symptom) !== -1} 
+#+END_SRC
+即可以把所有symptoms里有的病症打钩表示出来
+
+**** 数组为空是一个边界问题，在复杂的数据结构下如何优雅的处理。
+因为后面会用 =indexOf= 来判断数组是否包含某个值，如果symptoms未定义，就会报错。所以，任何一次render都要保证state.symptoms为[]或[。。。许多数据]。
+**** checkbox 改变时如何捕捉并实时更新state里的数组。
+专门写了一个回调函数绑在每个CheckBox的onChange上。
+#+BEGIN_SRC js
+ _onSymptomCheckBoxChange = (array, option) => {
+    const idx = array.indexOf(option);
+    if (idx !== -1) {
+      array.splice(idx, 1);
+    } else {
+      array.push(option);
+    }
+    this.setState({
+      symptoms: array
+    });
+  }
+#+END_SRC
+array是原来的就的病症数组。option是当前Checkbox的病症。如果当前的病症option存在里面，onChange就要删掉他。如果不存在，正好相反，就要把他加进来。
+最后把更新后的array存到state里
+**** 把拿到的数组拿去更新这个状态。
+拿state的symptoms来更新数据库。写好api把数据传递过去。一切妥妥的搞定。
