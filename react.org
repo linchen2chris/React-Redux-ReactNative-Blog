@@ -1,7 +1,7 @@
 #+TITLE: React 官方文档翻译
 #+AUTHOR: 林晨<lc1990linux@gmail.com>
 
-#+SETUPFILE: setup/theme-readtheorg.setup
+#+SETUPFILE: theme-readtheorg.setup
 * 案例学习
 我们将构建一个简单实用的评论箱，你可以把它放到博客里。并提供实时评论。
 我们将提供：
