@@ -1,3 +1,7 @@
+#+TITLE: React 官方文档翻译
+#+AUTHOR: 林晨<lc1990linux@gmail.com>
+
+#+SETUPFILE: setup/theme-readtheorg.setup
 * 案例学习
 我们将构建一个简单实用的评论箱，你可以把它放到博客里。并提供实时评论。
 我们将提供：
@@ -681,3 +685,30 @@ var CommentBox = React.createClass({
 ** 恭喜
 你已经在几步简单的步骤下构建了一个评论箱，想学习更多React，可以读[[https://facebook.github.io/react/docs/why-react.html][为什么使用React]] 或深入研究 [[https://facebook.github.io/react/docs/top-level-api.html][API参考]]。
 祝你好运！
+
+* React编程思想
+在我看来，React是用JS构建大型快速的Web app最重要的方法。他在Facebook和Instagram工作的非常好。
+React的一个很棒的地方在于他帮助你思考你的apps，当你构建他们的时候。我讲带你走一遍这个过程，我们用React来构建一个可搜索的产品数据表。
+
+我们先从模拟开始。
+假设我们从设计师那里有个JSON api和一个模拟器，们的设计师显然不是特别好，因为模拟器长成这个样子。
+
+[[file:react.org_imgs/20160423_180957_46529MWh.png]]
+
+我们的JSON API返回的数据大概是这样子。
+#+BEGIN_SRC json
+[
+  {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
+  {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
+  {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
+  {category: "Electronics", price: "$99.99", stocked: true, name: "iPod Touch"},
+  {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
+  {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
+];
+#+END_SRC
+
+** 拆分UI成组件结构
+首先你会想在每个组件和子组件上画框框。并且给他们命名。如果你和一个设计师一起工作，他们可能已经帮你做了这些。所以，走去和他们交流。他们的PS图层名称可以作为你的React组件名。
+
+但你怎么知道哪些应该成为它自己的组件。同样的原理，何时你觉得应该创建一个函数和对象。其中一个原理就是 =单一职责原则= 也就是，一个组件最好只做一件事，如果它持续增长，它就应该拆分成更小的子组件。
+因为你经常展示JSON数据，你会发现如果你的model构建正确，你的UI（就是你的组件结构）也会同样的美观。因为UI和data model将粘附在同样的信息结构上，这意味着

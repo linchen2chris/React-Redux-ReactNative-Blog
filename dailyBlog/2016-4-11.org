@@ -13,7 +13,7 @@ symptoms: []
 }
 #+END_SRC
 state的结构如下：
-#+BEGIN_SRC 
+#+BEGIN_SRC js
 state = {
 followupRecord: {},
 symptoms: [], // =state= 首先初始化为空 []。保证了第一次render。
