@@ -1,0 +1,1185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2016-04-23 Sat 18:22 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>React 官方文档翻译</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="林晨&lt;lc1990linux@gmail.com&gt;" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">React 官方文档翻译</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline24">1. 案例学习</a>
+<ul>
+<li><a href="#orgheadline1">1.1. 想跳过所有的直接看全部源代码？</a></li>
+<li><a href="#orgheadline4">1.2. 注释： 下面是我的源代码简单研读：</a>
+<ul>
+<li><a href="#orgheadline2">1.2.1. server.js</a></li>
+<li><a href="#orgheadline3">1.2.2. example.js</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline5">1.3. 运行server</a></li>
+<li><a href="#orgheadline6">1.4. 开始</a></li>
+<li><a href="#orgheadline7">1.5. 第一个组件</a></li>
+<li><a href="#orgheadline8">1.6. JSX语法：</a></li>
+<li><a href="#orgheadline9">1.7. 发生了什么</a></li>
+<li><a href="#orgheadline10">1.8. Composing 组件</a></li>
+<li><a href="#orgheadline11">1.9. 使用porps</a></li>
+<li><a href="#orgheadline12">1.10. 组件属性</a></li>
+<li><a href="#orgheadline13">1.11. 添加Markdown支持</a></li>
+<li><a href="#orgheadline14">1.12. 连接数据模型</a></li>
+<li><a href="#orgheadline15">1.13. 从服务器获取数据</a></li>
+<li><a href="#orgheadline21">1.14. React的state</a>
+<ul>
+<li><a href="#orgheadline16">1.14.1. 更新state</a></li>
+<li><a href="#orgheadline17">1.14.2. 添加新的评论</a></li>
+<li><a href="#orgheadline18">1.14.3. 事件</a></li>
+<li><a href="#orgheadline19">1.14.4. 提交组件</a></li>
+<li><a href="#orgheadline20">1.14.5. 回调作为属性</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline22">1.15. 优化：优化更新</a></li>
+<li><a href="#orgheadline23">1.16. 恭喜</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline26">2. React编程思想</a>
+<ul>
+<li><a href="#orgheadline25">2.1. 拆分UI成组件结构</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline24" class="outline-2">
+<h2 id="orgheadline24"><span class="section-number-2">1</span> 案例学习</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+我们将构建一个简单实用的评论箱，你可以把它放到博客里。并提供实时评论。
+我们将提供：
+</p>
+<ul class="org-ul">
+<li>一个查看全部评论的视图</li>
+<li>一个提交评论的表单</li>
+<li>为你提供自定义后台的接口</li>
+</ul>
+<p>
+它也有一些整洁的特性：
+</p>
+<ul class="org-ul">
+<li>优化的评论： 评论在被保存到服务器之前就会在页面上列出来，这样会显得很快。</li>
+<li>实时更新：其他用户的评论会实时的跳进来</li>
+<li>Markdown格式：用户可以用markdown来格式化他们的文本。</li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1"><span class="section-number-3">1.1</span> 想跳过所有的直接看全部源代码？</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<a href="https://github.com/reactjs/react-tutorial">全部在github上</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">1.2</span> 注释： 下面是我的源代码简单研读：</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+主要是两个源文件：server.js和example.js。
+</p>
+</div>
+<div id="outline-container-orgheadline2" class="outline-4">
+<h4 id="orgheadline2"><span class="section-number-4">1.2.1</span> <a href="file:///Users/xiafeilv/Desktop/chris_javascript/react_tutorial/server.js">server.js</a></h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+主要是nodejs，express提供的文件存储，读取的后台数据api，demo没有使用数据库，而是使用了简单的json文件来做数据存储。
+主要提供了2个api， get所有的comments和post一批comments。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline3" class="outline-4">
+<h4 id="orgheadline3"><span class="section-number-4">1.2.2</span> <a href="file:///Users/xiafeilv/Desktop/chris_javascript/react_tutorial/public/scripts/example.js">example.js</a></h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+Comment类作为一个评论实体。
+CommentList类用来列出所有的Comments
+CommentForm类处理一个comment的提交表单。
+CommentBox把所有的封装起来，处理数据交互逻辑。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">1.3</span> 运行server</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+为了运行这个例子，我们将需要一个运行的server。它将提供API端为我们获取和传递数据。为了尽量简化，我们创建一个几行脚本语言就完成的简单服务器。你可以看server.js的代码。
+为了简化，运行的server使用json文件来做存储数据库。你不应该在生产环境运行它，但这很简单地模拟了你想做的。当你开启服务器，它会提供API端和我们需要的静态页面。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">1.4</span> 开始</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+这个案例里我们将尽量简化他，我们用一个HTML文件来引入我们前面讨论的服务器包。打开 /public/index.html，
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js">&lt;!-- index.html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=<span style="color: #2d9574;">"utf-8"</span> /&gt;
+    &lt;title&gt;React Tutorial&lt;/title&gt;
+    &lt;script src=<span style="color: #2d9574;">"https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"</span>&gt;&lt;/script&gt;
+    &lt;script src=<span style="color: #2d9574;">"https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"</span>&gt;&lt;/script&gt;
+    &lt;script src=<span style="color: #2d9574;">"https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"</span>&gt;&lt;/script&gt;
+    &lt;script src=<span style="color: #2d9574;">"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"</span>&gt;&lt;/script&gt;
+    &lt;script src=<span style="color: #2d9574;">"https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"</span>&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=<span style="color: #2d9574;">"content"</span>&gt;&lt;/div&gt;
+    &lt;script type=<span style="color: #2d9574;">"text/babel"</span> src=<span style="color: #2d9574;">"scripts/example.js"</span>&gt;&lt;/script&gt;
+    &lt;script type=<span style="color: #2d9574;">"text/babel"</span>&gt;
+      <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">To get started with this tutorial running your own code, simply remove</span>
+      <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">the script tag loading scripts/example.js and start writing code here.</span>
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+<p>
+本文余下部分，我们在script标签下写JS代码。我们没有使用任何先进的实时重载技术，所以，你需要手动刷新你的浏览器来看更新。打开浏览器输入 <b><a href="http://localhost:3000/">http://localhost:3000/</a></b> （在开启server之后），当你第一次不做任何修改载入时，你会看到我们想构建的完成后的产品。你想开始工作时，只需删掉预先放置的&lt;script&gt;标签即可。
+:: 注意
+我们使用了JOuery来简化ajax调用，但这并不是react必须的选择。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">1.5</span> 第一个组件</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+React全是模块化的，组件化的组件。对于我们的评论箱，我们需要以下组件
+</p>
+<ul class="org-ul">
+<li>CommentBox
+<ul class="org-ul">
+<li>CommentList
+<ul class="org-ul">
+<li>Comment</li>
+</ul></li>
+</ul></li>
+<li>CommentForm</li>
+</ul>
+<p>
+让我们来构建CommentBox组件。他是个简单的&lt;div&gt;:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial1.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentBox</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;div className=<span style="color: #2d9574;">"commentBox"</span>&gt;
+        <span style="color: #7590db;">Hello</span>, <span style="color: #7590db;">world</span>! <span style="color: #7590db;">I</span> <span style="color: #7590db;">am</span> <span style="color: #7590db;">a</span> <span style="color: #7590db;">CommentBox</span>.
+      &lt;/div&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+ReactDOM.render<span style="color: #4f97d7;">(</span>
+  &lt;CommentBox /&gt;,
+  document.getElementById<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">'content'</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+注意原生html元素的名字都以小写字母开头，但自定义的React类名字以大写字母开头，
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">1.6</span> JSX语法：</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+首先你注意到的是XML风格的语法在你的JS里，我们有一个简单的预编译器把这些语法糖转化成普通的js。
+被转化成的js code
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial1-raw.js</span>
+<span class="linenr"> 2: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentBox</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>displayName: <span style="color: #2d9574;">'CommentBox'</span>,
+<span class="linenr"> 3: </span>  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+<span class="linenr"> 5: </span>      React.createElement<span style="color: #b1951d;">(</span><span style="color: #2d9574;">'div'</span>, <span style="color: #4f97d7;">{</span>className: <span style="color: #2d9574;">"commentBox"</span><span style="color: #4f97d7;">}</span>,
+<span class="linenr"> 6: </span>        <span style="color: #2d9574;">"Hello, world! I am a CommentBox."</span>
+<span class="linenr"> 7: </span>      <span style="color: #b1951d;">)</span>
+<span class="linenr"> 8: </span>    <span style="color: #67b11d;">)</span>;
+<span class="linenr"> 9: </span>  <span style="color: #2d9574;">}</span>
+<span class="linenr">10: </span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+<span class="linenr">11: </span>ReactDOM.render<span style="color: #4f97d7;">(</span>
+<span class="linenr">12: </span>  React.createElement<span style="color: #bc6ec5;">(</span>CommentBox, <span style="color: #a45bad;">null</span><span style="color: #bc6ec5;">)</span>,
+<span class="linenr">13: </span>  document.getElementById<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">'content'</span><span style="color: #bc6ec5;">)</span>
+<span class="linenr">14: </span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+使用jsx语法不是必须的，你可以做选择，但我们发现jsx语法比不同js更容易使用，<a href="https://facebook.github.io/react/docs/jsx-in-depth.html">这里</a>可以读到更多JSX语法文件。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">1.7</span> 发生了什么</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+我们在js对象里传递一些方法到React.createClass()里去创建一个React组件。这些方法里最重要的是一个叫 <b>render</b> 的方法。它返回一个React组件树，最终会被渲染成HTML。
+&lt;div&gt;标签并非实际的DOM节点，他们是React的&lt;div&gt;组件的实例，你可以把这些看做是React可以处理的符号或数据块，React是安全的，我们不会生成HTML字符串，所以会默认有XSS保护。
+你不需要返回基本HTML， 你可以返回一棵全是自己创建的组件树，正是这一点使得React是 <b>组件化</b> ：这是可维护前端的一个关键信条。
+ReactDOM.render() 实例化根组件，启动框架，并且根据第二个参数把这些标记注入成原生DOM元素。
+ReactDOM模块提供DOM相关的方法，而React模块为React及其相关平台提供和谐工具集（如React-Native，使用react框架来写ios和android原生应用）
+把ReactDOM.render放在脚本的最后是非常重要的，ReactDOM.render 应该在组件定义之后被调用。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">1.8</span> Composing 组件</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+下面来构建 <b>CommentList</b> 和 *CommentForm"的框架。他们还是简单的&lt;div&gt;. 添加这两个组件到你的文件里，保持已有的CommentBox声明和ReactDOM.render调用。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial2.js</span>
+<span class="linenr"> 2: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentList</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+<span class="linenr"> 3: </span>  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+<span class="linenr"> 5: </span>      &lt;div className=<span style="color: #2d9574;">"commentList"</span>&gt;
+<span class="linenr"> 6: </span>        <span style="color: #7590db;">Hello</span>, <span style="color: #7590db;">world</span>! <span style="color: #7590db;">I</span> <span style="color: #7590db;">am</span> <span style="color: #7590db;">a</span> <span style="color: #7590db;">CommentList</span>.
+<span class="linenr"> 7: </span>      &lt;/div&gt;
+<span class="linenr"> 8: </span>    <span style="color: #67b11d;">)</span>;
+<span class="linenr"> 9: </span>  <span style="color: #2d9574;">}</span>
+<span class="linenr">10: </span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+<span class="linenr">11: </span>
+<span class="linenr">12: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentForm</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+<span class="linenr">13: </span>  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr">14: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+<span class="linenr">15: </span>      &lt;div className=<span style="color: #2d9574;">"commentForm"</span>&gt;
+<span class="linenr">16: </span>        <span style="color: #7590db;">Hello</span>, <span style="color: #7590db;">world</span>! <span style="color: #7590db;">I</span> <span style="color: #7590db;">am</span> <span style="color: #7590db;">a</span> <span style="color: #7590db;">CommentForm</span>.
+<span class="linenr">17: </span>      &lt;/div&gt;
+<span class="linenr">18: </span>    <span style="color: #67b11d;">)</span>;
+<span class="linenr">19: </span>  <span style="color: #2d9574;">}</span>
+<span class="linenr">20: </span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+接下来，用这些新组建更新CommentBox组件。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial3.js</span>
+<span class="linenr"> 2: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentBox</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+<span class="linenr"> 3: </span>  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+<span class="linenr"> 5: </span>      &lt;div className=<span style="color: #2d9574;">"commentBox"</span>&gt;
+<span class="linenr"> 6: </span>        &lt;h1&gt;Comments&lt;/h1&gt;
+<span class="linenr"> 7: </span>        &lt;CommentList /&gt;
+<span class="linenr"> 8: </span>        &lt;CommentForm /&gt;
+<span class="linenr"> 9: </span>      &lt;/div&gt;
+<span class="linenr">10: </span>    <span style="color: #67b11d;">)</span>;
+<span class="linenr">11: </span>  <span style="color: #2d9574;">}</span>
+<span class="linenr">12: </span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+注意我们是怎么混合html标签和组件的。HTML组件是普通React组件，和你自定义的组件一样，唯一不同的是JSX编译器自动重写HTML标签到React.createElement(tagName)语句，和其他所有的东西都隔离开。这样是为了避免全局命名空间的污染。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">1.9</span> 使用porps</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+我们创建Comment组件，会依赖福组件传来的数据。从父组件传入的数据，子组件可以通过'Property'来访问.这些'Property'存在this.props. 使用props,我们能读取从CommentList传来Comment的数据,并渲染一些符号:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial4.js</span>
+<span class="linenr"> 2: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">Comment</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+<span class="linenr"> 3: </span>  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+<span class="linenr"> 5: </span>      &lt;div className=<span style="color: #2d9574;">"comment"</span>&gt;
+<span class="linenr"> 6: </span>        &lt;h2 className=<span style="color: #2d9574;">"commentAuthor"</span>&gt;
+<span class="linenr"> 7: </span>          <span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.props.author<span style="color: #b1951d;">}</span>
+<span class="linenr"> 8: </span>        &lt;/h2&gt;
+<span class="linenr"> 9: </span>        <span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.props.children<span style="color: #b1951d;">}</span>
+<span class="linenr">10: </span>      &lt;/div&gt;
+<span class="linenr">11: </span>    <span style="color: #67b11d;">)</span>;
+<span class="linenr">12: </span>  <span style="color: #2d9574;">}</span>
+<span class="linenr">13: </span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+JSX里把JS语句括在大括号里（像一个属性或一个子语句, 你可以丢文本或者React组件到标签树上.我们获取通过this.props来获取传来的命名属性,通过this.props.children来获取任何封装元素.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">1.10</span> 组件属性</h3>
+<div class="outline-text-3" id="text-1-10">
+<p>
+现在我们有定义好的Comment组件,我们想传进作者名字和评论文本. 我们可以在每一个不同的评论重用相同代码,我们来给CommentList加一些评论。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial5.js</span>
+<span class="linenr"> 2: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentList</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+<span class="linenr"> 3: </span>  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+<span class="linenr"> 5: </span>      &lt;div className=<span style="color: #2d9574;">"commentList"</span>&gt;
+<span class="linenr"> 6: </span>        &lt;Comment author=<span style="color: #2d9574;">"Pete Hunt"</span>&gt;This is one comment&lt;/Comment&gt;
+<span class="linenr"> 7: </span>        &lt;Comment author=<span style="color: #2d9574;">"Jordan Walke"</span>&gt;This is *another* comment&lt;/Comment&gt;
+<span class="linenr"> 8: </span>      &lt;/div&gt;
+<span class="linenr"> 9: </span>    <span style="color: #67b11d;">)</span>;
+<span class="linenr">10: </span>  <span style="color: #2d9574;">}</span>
+<span class="linenr">11: </span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+我们从父组件CommentList给子组件Comment传入了一些数据。例如我们传入Pete Hunt（属性），这是一个Comment（通过XML类似的子节点）。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">1.11</span> 添加Markdown支持</h3>
+<div class="outline-text-3" id="text-1-11">
+<p>
+Markdown是最简单的方法来格式化内嵌文本的，例如用星号包裹的文本会被加粗。
+我们用了第三方库 <b>marked</b> 来把markdown格式的文本转换成原生HTML。我们已经添加了这个库，所有直接使用就可以了。我们来转换并输出它。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial6.js</span>
+<span class="linenr"> 2: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">Comment</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+<span class="linenr"> 3: </span>  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+<span class="linenr"> 5: </span>      &lt;div className=<span style="color: #2d9574;">"comment"</span>&gt;
+<span class="linenr"> 6: </span>        &lt;h2 className=<span style="color: #2d9574;">"commentAuthor"</span>&gt;
+<span class="linenr"> 7: </span>          <span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.props.author<span style="color: #b1951d;">}</span>
+<span class="linenr"> 8: </span>        &lt;/h2&gt;
+<span class="linenr"> 9: </span>        <span style="color: #b1951d;">{</span>marked<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span>.props.children.toString<span style="color: #bc6ec5;">()</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">}</span>
+<span class="linenr">10: </span>      &lt;/div&gt;
+<span class="linenr">11: </span>    <span style="color: #67b11d;">)</span>;
+<span class="linenr">12: </span>  <span style="color: #2d9574;">}</span>
+</pre>
+</div>
+<p>
+我们做的只是直接使用这个库,我们需要把this.props.children从React封装文本转换成原始字符串,所以我们要调用toString()方法.
+但有一个问题! 我们的渲染的评论在浏览器里大概是这样:"&lt;p&gt;This is &lt;em&gt;another&lt;/em&gt; comment&lt;/p&gt;".我们想这些标签可以确切地渲染成HTML.这是为了防止你遭受XSS 攻击，有个方法可以避免，但框架会警告你不要使用它。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial7.js</span>
+<span class="linenr"> 2: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">Comment</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+<span class="linenr"> 3: </span>  <span style="color: #bc6ec5; font-weight: bold;">rawMarkup</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">rawMarkup</span> = marked<span style="color: #67b11d;">(</span><span style="color: #a45bad;">this</span>.props.children.toString<span style="color: #b1951d;">()</span>, <span style="color: #b1951d;">{</span>sanitize: <span style="color: #a45bad;">true</span><span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+<span class="linenr"> 5: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">{</span> __html: rawMarkup <span style="color: #67b11d;">}</span>;
+<span class="linenr"> 6: </span>  <span style="color: #2d9574;">}</span>,
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr"> 9: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+<span class="linenr">10: </span>      &lt;div className=<span style="color: #2d9574;">"comment"</span>&gt;
+<span class="linenr">11: </span>        &lt;h2 className=<span style="color: #2d9574;">"commentAuthor"</span>&gt;
+<span class="linenr">12: </span>          <span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.props.author<span style="color: #b1951d;">}</span>
+<span class="linenr">13: </span>        &lt;/h2&gt;
+<span class="linenr">14: </span>        &lt;span dangerouslySetInnerHTML=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.rawMarkup<span style="color: #4f97d7;">()</span><span style="color: #b1951d;">}</span> /&gt;
+<span class="linenr">15: </span>      &lt;/div&gt;
+<span class="linenr">16: </span>    <span style="color: #67b11d;">)</span>;
+<span class="linenr">17: </span>  <span style="color: #2d9574;">}</span>
+<span class="linenr">18: </span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+这个特别的API故意让插入原始HTML变得困难。但对于marked库，我们会故意利用这个后门。
+记住： 使用这个特性，你将依靠marked来保证安全。这个例子里，我们传入 <code>sanitize: true</code> 告诉marked 跳过源代码里的任何HTML符号, 而不是不加修改地全部传进去.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">1.12</span> 连接数据模型</h3>
+<div class="outline-text-3" id="text-1-12">
+<p>
+目前为止, 我们已经在源码直接插入评论, 我们要渲染一个一团JSON数据到评论列表中，实际上这些应该来自于服务器，为了简化现在我们把json手写进代码里。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial8.js</span>
+<span class="linenr">2: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">data</span> = <span style="color: #4f97d7;">[</span>
+<span class="linenr">3: </span>  <span style="color: #bc6ec5;">{</span>id: <span style="color: #a45bad;">1</span>, author: <span style="color: #2d9574;">"Pete Hunt"</span>, text: <span style="color: #2d9574;">"This is one comment"</span><span style="color: #bc6ec5;">}</span>,
+<span class="linenr">4: </span>  <span style="color: #bc6ec5;">{</span>id: <span style="color: #a45bad;">2</span>, author: <span style="color: #2d9574;">"Jordan Walke"</span>, text: <span style="color: #2d9574;">"This is *another* comment"</span><span style="color: #bc6ec5;">}</span>
+<span class="linenr">5: </span><span style="color: #4f97d7;">]</span>;
+</pre>
+</div>
+<p>
+我们需要用模块化的方法把这些数据获取进评论列表里。修改 <code>CommentBox</code> 和 <code>ReactDOM.render()</code> 方法,通过props传入这些数据到 <code>CommentList</code> 里.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial9.js</span>
+<span class="linenr"> 2: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentBox</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+<span class="linenr"> 3: </span>  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+<span class="linenr"> 5: </span>      &lt;div className=<span style="color: #2d9574;">"commentBox"</span>&gt;
+<span class="linenr"> 6: </span>        &lt;h1&gt;Comments&lt;/h1&gt;
+<span class="linenr"> 7: </span>        &lt;CommentList data=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.props.data<span style="color: #b1951d;">}</span> /&gt;
+<span class="linenr"> 8: </span>        &lt;CommentForm /&gt;
+<span class="linenr"> 9: </span>      &lt;/div&gt;
+<span class="linenr">10: </span>    <span style="color: #67b11d;">)</span>;
+<span class="linenr">11: </span>  <span style="color: #2d9574;">}</span>
+<span class="linenr">12: </span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>ReactDOM.render<span style="color: #4f97d7;">(</span>
+<span class="linenr">15: </span>  &lt;CommentBox data=<span style="color: #bc6ec5;">{</span>data<span style="color: #bc6ec5;">}</span> /&gt;,
+<span class="linenr">16: </span>  document.getElementById<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">'content'</span><span style="color: #bc6ec5;">)</span>
+<span class="linenr">17: </span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+现在，这些数据可以在 <code>CommentList</code> 中使用了， 我们可以动态渲染这些评论了。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial10.js</span>
+<span class="linenr"> 2: </span><span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentList</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+<span class="linenr"> 3: </span>  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">commentNodes</span> = <span style="color: #a45bad;">this</span>.props.data.map<span style="color: #67b11d;">(</span><span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #b1951d;">(</span><span style="color: #7590db;">comment</span><span style="color: #b1951d;">)</span> <span style="color: #b1951d;">{</span>
+<span class="linenr"> 5: </span>      <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">(</span>
+<span class="linenr"> 6: </span>        &lt;Comment author=<span style="color: #bc6ec5;">{</span>comment.author<span style="color: #bc6ec5;">}</span> key=<span style="color: #bc6ec5;">{</span>comment.id<span style="color: #bc6ec5;">}</span>&gt;
+<span class="linenr"> 7: </span>          <span style="color: #bc6ec5;">{</span>comment.text<span style="color: #bc6ec5;">}</span>
+<span class="linenr"> 8: </span>        &lt;/Comment&gt;
+<span class="linenr"> 9: </span>      <span style="color: #4f97d7;">)</span>;
+<span class="linenr">10: </span>    <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+<span class="linenr">11: </span>    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+<span class="linenr">12: </span>      &lt;div className=<span style="color: #2d9574;">"commentList"</span>&gt;
+<span class="linenr">13: </span>        <span style="color: #b1951d;">{</span>commentNodes<span style="color: #b1951d;">}</span>
+<span class="linenr">14: </span>      &lt;/div&gt;
+<span class="linenr">15: </span>    <span style="color: #67b11d;">)</span>;
+<span class="linenr">16: </span>  <span style="color: #2d9574;">}</span>
+<span class="linenr">17: </span><span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+就这样。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">1.13</span> 从服务器获取数据</h3>
+<div class="outline-text-3" id="text-1-13">
+<p>
+现在我们用服务器获取的动态数据来替换写死的数据，我们删除data属性，替换成URL来获取
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial11.js</span>
+<span class="linenr">2: </span>ReactDOM.render<span style="color: #4f97d7;">(</span>
+<span class="linenr">3: </span>  &lt;CommentBox url=<span style="color: #2d9574;">"/api/comments"</span> /&gt;,
+<span class="linenr">4: </span>  document.getElementById<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">'content'</span><span style="color: #bc6ec5;">)</span>
+<span class="linenr">5: </span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+这个组件不同于之前的，他需要重渲染自己。组件没有任何数据，直到它向服务器请求到数据，这时，这个组件需要去渲染一些新组件。
+&gt;注意：现在这些代码还不能正常工作
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="section-number-3">1.14</span> React的state</h3>
+<div class="outline-text-3" id="text-1-14">
+<p>
+目前为止，基于props，每个组件都已经渲染他自己，props不可改变，它从父组件传来，被父组件拥有，为了实现交互，我们引入组件可变的 <b>state</b> 。=this.state= 是组件私有的，可以通过this.setState() 来改变。当state更新，组件就会重新渲染。
+render方法是this.props和this.state的函数，框架保证UI始终和输入一致。
+当服务器获取数据，我们将修改评论数据，让我们来添加一组评论数据作为state到评论箱中。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial12.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentBox</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">getInitialState</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">{</span>data: <span style="color: #b1951d;">[]</span><span style="color: #67b11d;">}</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;div className=<span style="color: #2d9574;">"commentBox"</span>&gt;
+        &lt;h1&gt;Comments&lt;/h1&gt;
+        &lt;CommentList data=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.data<span style="color: #b1951d;">}</span> /&gt;
+        &lt;CommentForm /&gt;
+      &lt;/div&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+getInitialState() 在组件生命周期内仅会执行一次，设置组件的初始状态。
+</p>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-4">
+<h4 id="orgheadline16"><span class="section-number-4">1.14.1</span> 更新state</h4>
+<div class="outline-text-4" id="text-1-14-1">
+<p>
+当组件第一次被创建，我们想从服务器上GET一些JSON数据，并更新state以反映最新的数据。我们将用JQuery框架来向服务器发送异步请求我们需要的数据，数据包含在common.json中,一旦获取,this.state.data看起来会想这样
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #4f97d7;">[</span>
+  <span style="color: #bc6ec5;">{</span><span style="color: #2d9574;">"author"</span>: <span style="color: #2d9574;">"Pete Hunt"</span>, <span style="color: #2d9574;">"text"</span>: <span style="color: #2d9574;">"This is one comment"</span><span style="color: #bc6ec5;">}</span>,
+  <span style="color: #bc6ec5;">{</span><span style="color: #2d9574;">"author"</span>: <span style="color: #2d9574;">"Jordan Walke"</span>, <span style="color: #2d9574;">"text"</span>: <span style="color: #2d9574;">"This is *another* comment"</span><span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">]</span>
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial13.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentBox</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">getInitialState</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">{</span>data: <span style="color: #b1951d;">[]</span><span style="color: #67b11d;">}</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">componentDidMount</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    $.ajax<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>
+      url: <span style="color: #a45bad;">this</span>.props.url,
+      dataType: <span style="color: #2d9574;">'json'</span>,
+      cache: <span style="color: #a45bad;">false</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">success</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">data</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        <span style="color: #a45bad;">this</span>.setState<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>data: data<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">error</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">xhr</span>, <span style="color: #7590db;">status</span>, <span style="color: #7590db;">err</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        console.error<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">this</span>.props.url, status, err.toString<span style="color: #2d9574;">()</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;div className=<span style="color: #2d9574;">"commentBox"</span>&gt;
+        &lt;h1&gt;Comments&lt;/h1&gt;
+        &lt;CommentList data=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.data<span style="color: #b1951d;">}</span> /&gt;
+        &lt;CommentForm /&gt;
+      &lt;/div&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+componentDidMount会在组件第一次渲染之后被自动调用。动态更新的关键是调用this.setState(), 我们用新数组替换旧的,UI就会随之自动更新。因为这个相关性，它只是一个小改变去添加实时更新，我们这里将用简单的ajax获取但你可以更简单的websockets或其他技术。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial14.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentBox</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">loadCommentsFromServer</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    $.ajax<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>
+      url: <span style="color: #a45bad;">this</span>.props.url,
+      dataType: <span style="color: #2d9574;">'json'</span>,
+      cache: <span style="color: #a45bad;">false</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">success</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">data</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        <span style="color: #a45bad;">this</span>.setState<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>data: data<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">error</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">xhr</span>, <span style="color: #7590db;">status</span>, <span style="color: #7590db;">err</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        console.error<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">this</span>.props.url, status, err.toString<span style="color: #2d9574;">()</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">getInitialState</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">{</span>data: <span style="color: #b1951d;">[]</span><span style="color: #67b11d;">}</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">componentDidMount</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #a45bad;">this</span>.loadCommentsFromServer<span style="color: #67b11d;">()</span>;
+    setInterval<span style="color: #67b11d;">(</span><span style="color: #a45bad;">this</span>.loadCommentsFromServer, <span style="color: #a45bad;">this</span>.props.pollInterval<span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;div className=<span style="color: #2d9574;">"commentBox"</span>&gt;
+        &lt;h1&gt;Comments&lt;/h1&gt;
+        &lt;CommentList data=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.data<span style="color: #b1951d;">}</span> /&gt;
+        &lt;CommentForm /&gt;
+      &lt;/div&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+
+ReactDOM.render<span style="color: #4f97d7;">(</span>
+  &lt;CommentBox url=<span style="color: #2d9574;">"/api/comments"</span> pollInterval=<span style="color: #bc6ec5;">{</span><span style="color: #a45bad;">2000</span><span style="color: #bc6ec5;">}</span> /&gt;,
+  document.getElementById<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">'content'</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+这里我们只是把ajax调用单独放到一个函数,当组件首次加载,之后每隔2s就重新调用它.在你的浏览器里运行它,并修改你的json文件,每隔2s,这些改变就会出现在页面上.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">1.14.2</span> 添加新的评论</h4>
+<div class="outline-text-4" id="text-1-14-2">
+<p>
+现在可以构建表单了,评论表单组件应该输入评论者姓名和评论内容来向服务器发送请求存储这条评论.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial15.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentForm</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;form className=<span style="color: #2d9574;">"commentForm"</span>&gt;
+        &lt;input type=<span style="color: #2d9574;">"text"</span> placeholder=<span style="color: #2d9574;">"Your name"</span> /&gt;
+        &lt;input type=<span style="color: #2d9574;">"text"</span> placeholder=<span style="color: #2d9574;">"Say something..."</span> /&gt;
+        &lt;input type=<span style="color: #2d9574;">"submit"</span> value=<span style="color: #2d9574;">"Post"</span> /&gt;
+      &lt;/form&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+受控的组件
+传统DOM里， <code>input</code> 元素被呈现，浏览器管理他的 <code>state</code> （也就是他索要渲染的值）结果实际DOM的state可能与组件里保存的state不同.这不理想,因为视图的state与组件的状态不同. 在React里,组件应该始终代表试图的state, 而不仅仅在初始化的时刻.
+因此,我们将用this.state来存储用户的输入.我们用 <code>author</code> 和 <code>text</code> 两个内容为空字符串的属性定义一个初始化的state.在&lt;input&gt;元素中,我们设置 <code>value</code> 属性来反应组件状态,并且绑定 <code>onChange</code> 回调函数, 这些&lt;input&gt; 元素带有一个设定的值 被称为受控组件. 关于更多受控组件的信息可以读<a href="https://facebook.github.io/react/docs/forms.html#controlled-components">这里</a>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial16.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentForm</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">getInitialState</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">{</span>author: <span style="color: #2d9574;">''</span>, text: <span style="color: #2d9574;">''</span><span style="color: #67b11d;">}</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleAuthorChange</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">e</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #a45bad;">this</span>.setState<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>author: e.target.value<span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleTextChange</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">e</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #a45bad;">this</span>.setState<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>text: e.target.value<span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;form className=<span style="color: #2d9574;">"commentForm"</span>&gt;
+        &lt;input
+          type=<span style="color: #2d9574;">"text"</span>
+          placeholder=<span style="color: #2d9574;">"Your name"</span>
+          value=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.author<span style="color: #b1951d;">}</span>
+          onChange=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleAuthorChange<span style="color: #b1951d;">}</span>
+        /&gt;
+        &lt;input
+          type=<span style="color: #2d9574;">"text"</span>
+          placeholder=<span style="color: #2d9574;">"Say something..."</span>
+          value=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.text<span style="color: #b1951d;">}</span>
+          onChange=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleTextChange<span style="color: #b1951d;">}</span>
+        /&gt;
+        &lt;input type=<span style="color: #2d9574;">"submit"</span> value=<span style="color: #2d9574;">"Post"</span> /&gt;
+      &lt;/form&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">1.14.3</span> 事件</h4>
+<div class="outline-text-4" id="text-1-14-3">
+<p>
+React 对绑定组件的事件用驼峰命名法。我们绑定onChange回调函数到两个&lt;input&gt;元素,现在,当用户录入文本到&lt;input&gt;区域绑定的onChange回调函数会被触发,组件的state会被修改,随即,input元素的渲染值会被更新以反映当前组件的state.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline19" class="outline-4">
+<h4 id="orgheadline19"><span class="section-number-4">1.14.4</span> 提交组件</h4>
+<div class="outline-text-4" id="text-1-14-4">
+<p>
+我们来让组件可交互，当用户提交组件，我们应该清楚它，提交请求到服务器 并刷新评论列表。我们收听组件提交时间并清理它.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial17.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentForm</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">getInitialState</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">{</span>author: <span style="color: #2d9574;">''</span>, text: <span style="color: #2d9574;">''</span><span style="color: #67b11d;">}</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleAuthorChange</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">e</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #a45bad;">this</span>.setState<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>author: e.target.value<span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleTextChange</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">e</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #a45bad;">this</span>.setState<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>text: e.target.value<span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleSubmit</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">e</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    e.preventDefault<span style="color: #67b11d;">()</span>;
+    <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">author</span> = <span style="color: #a45bad;">this</span>.state.author.trim<span style="color: #67b11d;">()</span>;
+    <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">text</span> = <span style="color: #a45bad;">this</span>.state.text.trim<span style="color: #67b11d;">()</span>;
+    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>!text || !author<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
+      <span style="color: #4f97d7; font-weight: bold;">return</span>;
+    <span style="color: #67b11d;">}</span>
+    <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #cc9393;">TODO</span><span style="color: #2aa1ae; background-color: #292e34;">: send request to the server</span>
+    <span style="color: #a45bad;">this</span>.setState<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>author: <span style="color: #2d9574;">''</span>, text: <span style="color: #2d9574;">''</span><span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;form className=<span style="color: #2d9574;">"commentForm"</span> onSubmit=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleSubmit<span style="color: #b1951d;">}</span>&gt;
+        &lt;input
+          type=<span style="color: #2d9574;">"text"</span>
+          placeholder=<span style="color: #2d9574;">"Your name"</span>
+          value=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.author<span style="color: #b1951d;">}</span>
+          onChange=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleAuthorChange<span style="color: #b1951d;">}</span>
+        /&gt;
+        &lt;input
+          type=<span style="color: #2d9574;">"text"</span>
+          placeholder=<span style="color: #2d9574;">"Say something..."</span>
+          value=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.text<span style="color: #b1951d;">}</span>
+          onChange=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleTextChange<span style="color: #b1951d;">}</span>
+        /&gt;
+        &lt;input type=<span style="color: #2d9574;">"submit"</span> value=<span style="color: #2d9574;">"Post"</span> /&gt;
+      &lt;/form&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+我们在表单上绑定一个onSubmit回调函数并且在提交表单的时候清除表单域。
+对事件调用 <code>preventDefault</code> 是为了阻止浏览器在提交表单时的默认行为。
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline20" class="outline-4">
+<h4 id="orgheadline20"><span class="section-number-4">1.14.5</span> 回调作为属性</h4>
+<div class="outline-text-4" id="text-1-14-5">
+<p>
+当用户提交评论，我们将需要刷新评论列表以包含这个信提交的评论。这些逻辑应该写在 <code>CommentBox</code> 里，因为CommentBox拥有表示评论列表的state。
+我们需要传递数据从子组件回到他的父组件。我们在父组件的render方法里通过传递一个新的回调函数到子组件中,绑定到子组件的 <code>onCommentSubmit</code> 方法上.只有事件触发,回调就会被唤起。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial18.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentBox</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">loadCommentsFromServer</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    $.ajax<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>
+      url: <span style="color: #a45bad;">this</span>.props.url,
+      dataType: <span style="color: #2d9574;">'json'</span>,
+      cache: <span style="color: #a45bad;">false</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">success</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">data</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        <span style="color: #a45bad;">this</span>.setState<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>data: data<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">error</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">xhr</span>, <span style="color: #7590db;">status</span>, <span style="color: #7590db;">err</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        console.error<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">this</span>.props.url, status, err.toString<span style="color: #2d9574;">()</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleCommentSubmit</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">comment</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #cc9393;">TODO</span><span style="color: #2aa1ae; background-color: #292e34;">: submit to the server and refresh the list</span>
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">getInitialState</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">{</span>data: <span style="color: #b1951d;">[]</span><span style="color: #67b11d;">}</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">componentDidMount</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #a45bad;">this</span>.loadCommentsFromServer<span style="color: #67b11d;">()</span>;
+    setInterval<span style="color: #67b11d;">(</span><span style="color: #a45bad;">this</span>.loadCommentsFromServer, <span style="color: #a45bad;">this</span>.props.pollInterval<span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;div className=<span style="color: #2d9574;">"commentBox"</span>&gt;
+        &lt;h1&gt;Comments&lt;/h1&gt;
+        &lt;CommentList data=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.data<span style="color: #b1951d;">}</span> /&gt;
+        &lt;CommentForm onCommentSubmit=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleCommentSubmit<span style="color: #b1951d;">}</span> /&gt;
+      &lt;/div&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+注意CommentBox已经使得这个回调函数对CommentForm可以使用，通过onCommentSubmit属性。CommentForm在用户提交表单的时候调用这个回调函数.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial19.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentForm</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">getInitialState</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">{</span>author: <span style="color: #2d9574;">''</span>, text: <span style="color: #2d9574;">''</span><span style="color: #67b11d;">}</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleAuthorChange</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">e</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #a45bad;">this</span>.setState<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>author: e.target.value<span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleTextChange</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">e</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #a45bad;">this</span>.setState<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>text: e.target.value<span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleSubmit</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">e</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    e.preventDefault<span style="color: #67b11d;">()</span>;
+    <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">author</span> = <span style="color: #a45bad;">this</span>.state.author.trim<span style="color: #67b11d;">()</span>;
+    <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">text</span> = <span style="color: #a45bad;">this</span>.state.text.trim<span style="color: #67b11d;">()</span>;
+    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #67b11d;">(</span>!text || !author<span style="color: #67b11d;">)</span> <span style="color: #67b11d;">{</span>
+      <span style="color: #4f97d7; font-weight: bold;">return</span>;
+    <span style="color: #67b11d;">}</span>
+    <span style="color: #a45bad;">this</span>.props.onCommentSubmit<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>author: author, text: text<span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+    <span style="color: #a45bad;">this</span>.setState<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>author: <span style="color: #2d9574;">''</span>, text: <span style="color: #2d9574;">''</span><span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;form className=<span style="color: #2d9574;">"commentForm"</span> onSubmit=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleSubmit<span style="color: #b1951d;">}</span>&gt;
+        &lt;input
+          type=<span style="color: #2d9574;">"text"</span>
+          placeholder=<span style="color: #2d9574;">"Your name"</span>
+          value=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.author<span style="color: #b1951d;">}</span>
+          onChange=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleAuthorChange<span style="color: #b1951d;">}</span>
+        /&gt;
+        &lt;input
+          type=<span style="color: #2d9574;">"text"</span>
+          placeholder=<span style="color: #2d9574;">"Say something..."</span>
+          value=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.text<span style="color: #b1951d;">}</span>
+          onChange=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleTextChange<span style="color: #b1951d;">}</span>
+        /&gt;
+        &lt;input type=<span style="color: #2d9574;">"submit"</span> value=<span style="color: #2d9574;">"Post"</span> /&gt;
+      &lt;/form&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+<p>
+现在回调函数已经归位了,我们需要做的仅仅是提交到服务器并刷新列表.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial20.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentBox</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">loadCommentsFromServer</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    $.ajax<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>
+      url: <span style="color: #a45bad;">this</span>.props.url,
+      dataType: <span style="color: #2d9574;">'json'</span>,
+      cache: <span style="color: #a45bad;">false</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">success</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">data</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        <span style="color: #a45bad;">this</span>.setState<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>data: data<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">error</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">xhr</span>, <span style="color: #7590db;">status</span>, <span style="color: #7590db;">err</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        console.error<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">this</span>.props.url, status, err.toString<span style="color: #2d9574;">()</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleCommentSubmit</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">comment</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    $.ajax<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>
+      url: <span style="color: #a45bad;">this</span>.props.url,
+      dataType: <span style="color: #2d9574;">'json'</span>,
+      type: <span style="color: #2d9574;">'POST'</span>,
+      data: comment,
+      <span style="color: #bc6ec5; font-weight: bold;">success</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">data</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        <span style="color: #a45bad;">this</span>.setState<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>data: data<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">error</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">xhr</span>, <span style="color: #7590db;">status</span>, <span style="color: #7590db;">err</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        console.error<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">this</span>.props.url, status, err.toString<span style="color: #2d9574;">()</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">getInitialState</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">{</span>data: <span style="color: #b1951d;">[]</span><span style="color: #67b11d;">}</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">componentDidMount</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #a45bad;">this</span>.loadCommentsFromServer<span style="color: #67b11d;">()</span>;
+    setInterval<span style="color: #67b11d;">(</span><span style="color: #a45bad;">this</span>.loadCommentsFromServer, <span style="color: #a45bad;">this</span>.props.pollInterval<span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;div className=<span style="color: #2d9574;">"commentBox"</span>&gt;
+        &lt;h1&gt;Comments&lt;/h1&gt;
+        &lt;CommentList data=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.data<span style="color: #b1951d;">}</span> /&gt;
+        &lt;CommentForm onCommentSubmit=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleCommentSubmit<span style="color: #b1951d;">}</span> /&gt;
+      &lt;/div&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline22" class="outline-3">
+<h3 id="orgheadline22"><span class="section-number-3">1.15</span> 优化：优化更新</h3>
+<div class="outline-text-3" id="text-1-15">
+<p>
+我们的app现在功能已经完全了,但反应缓慢,在你的评论出现在列表中之前你需要等待请求.我们可以优化添加这个评论到列表中让app感觉更快.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">tutorial21.js</span>
+<span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">CommentBox</span> = React.createClass<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">{</span>
+  <span style="color: #bc6ec5; font-weight: bold;">loadCommentsFromServer</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    $.ajax<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>
+      url: <span style="color: #a45bad;">this</span>.props.url,
+      dataType: <span style="color: #2d9574;">'json'</span>,
+      cache: <span style="color: #a45bad;">false</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">success</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">data</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        <span style="color: #a45bad;">this</span>.setState<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>data: data<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">error</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">xhr</span>, <span style="color: #7590db;">status</span>, <span style="color: #7590db;">err</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        console.error<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">this</span>.props.url, status, err.toString<span style="color: #2d9574;">()</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">handleCommentSubmit</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">comment</span><span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">comments</span> = <span style="color: #a45bad;">this</span>.state.data;
+    <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">Optimistically set an id on the new comment. It will be replaced by an</span>
+    <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">id generated by the server. In a production application you would likely</span>
+    <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">not use Date.now() for this and would have a more robust system in place.</span>
+    comment.id = Date.now<span style="color: #67b11d;">()</span>;
+    <span style="color: #4f97d7; font-weight: bold;">var</span> <span style="color: #7590db;">newComments</span> = comments.concat<span style="color: #67b11d;">(</span><span style="color: #b1951d;">[</span>comment<span style="color: #b1951d;">]</span><span style="color: #67b11d;">)</span>;
+    <span style="color: #a45bad;">this</span>.setState<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>data: newComments<span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+    $.ajax<span style="color: #67b11d;">(</span><span style="color: #b1951d;">{</span>
+      url: <span style="color: #a45bad;">this</span>.props.url,
+      dataType: <span style="color: #2d9574;">'json'</span>,
+      type: <span style="color: #2d9574;">'POST'</span>,
+      data: comment,
+      <span style="color: #bc6ec5; font-weight: bold;">success</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">data</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        <span style="color: #a45bad;">this</span>.setState<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>data: data<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>,
+      <span style="color: #bc6ec5; font-weight: bold;">error</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span><span style="color: #7590db;">xhr</span>, <span style="color: #7590db;">status</span>, <span style="color: #7590db;">err</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
+        <span style="color: #a45bad;">this</span>.setState<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">{</span>data: comments<span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>;
+        console.error<span style="color: #bc6ec5;">(</span><span style="color: #a45bad;">this</span>.props.url, status, err.toString<span style="color: #2d9574;">()</span><span style="color: #bc6ec5;">)</span>;
+      <span style="color: #4f97d7;">}</span>.bind<span style="color: #4f97d7;">(</span><span style="color: #a45bad;">this</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">getInitialState</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">{</span>data: <span style="color: #b1951d;">[]</span><span style="color: #67b11d;">}</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">componentDidMount</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #a45bad;">this</span>.loadCommentsFromServer<span style="color: #67b11d;">()</span>;
+    setInterval<span style="color: #67b11d;">(</span><span style="color: #a45bad;">this</span>.loadCommentsFromServer, <span style="color: #a45bad;">this</span>.props.pollInterval<span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>,
+  <span style="color: #bc6ec5; font-weight: bold;">render</span>: <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">()</span> <span style="color: #2d9574;">{</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #67b11d;">(</span>
+      &lt;div className=<span style="color: #2d9574;">"commentBox"</span>&gt;
+        &lt;h1&gt;Comments&lt;/h1&gt;
+        &lt;CommentList data=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.state.data<span style="color: #b1951d;">}</span> /&gt;
+        &lt;CommentForm onCommentSubmit=<span style="color: #b1951d;">{</span><span style="color: #a45bad;">this</span>.handleCommentSubmit<span style="color: #b1951d;">}</span> /&gt;
+      &lt;/div&gt;
+    <span style="color: #67b11d;">)</span>;
+  <span style="color: #2d9574;">}</span>
+<span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline23" class="outline-3">
+<h3 id="orgheadline23"><span class="section-number-3">1.16</span> 恭喜</h3>
+<div class="outline-text-3" id="text-1-16">
+<p>
+你已经在几步简单的步骤下构建了一个评论箱，想学习更多React，可以读<a href="https://facebook.github.io/react/docs/why-react.html">为什么使用React</a> 或深入研究 <a href="https://facebook.github.io/react/docs/top-level-api.html">API参考</a>。
+祝你好运！
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-2">
+<h2 id="orgheadline26"><span class="section-number-2">2</span> React编程思想</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+在我看来，React是用JS构建大型快速的Web app最重要的方法。他在Facebook和Instagram工作的非常好。
+React的一个很棒的地方在于他帮助你思考你的apps，当你构建他们的时候。我讲带你走一遍这个过程，我们用React来构建一个可搜索的产品数据表。
+</p>
+
+<p>
+我们先从模拟开始。
+假设我们从设计师那里有个JSON api和一个模拟器，们的设计师显然不是特别好，因为模拟器长成这个样子。
+</p>
+
+
+<div class="figure">
+<p><img src="react.org_imgs/20160423_180957_46529MWh.png" alt="20160423_180957_46529MWh.png" />
+</p>
+</div>
+
+<p>
+我们的JSON API返回的数据大概是这样子。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-json"><span style="color: #4f97d7;">[</span>
+  <span style="color: #bc6ec5;">{</span>category: <span style="color: #2d9574;">"Sporting Goods"</span>, price: "$49.<span style="color: #a45bad;">99</span>", stocked: <span style="color: #a45bad;">true</span>, name: <span style="color: #2d9574;">"Football"</span><span style="color: #bc6ec5;">}</span>,
+  <span style="color: #bc6ec5;">{</span>category: <span style="color: #2d9574;">"Sporting Goods"</span>, price: "$9.<span style="color: #a45bad;">99</span>", stocked: <span style="color: #a45bad;">true</span>, name: <span style="color: #2d9574;">"Baseball"</span><span style="color: #bc6ec5;">}</span>,
+  <span style="color: #bc6ec5;">{</span>category: <span style="color: #2d9574;">"Sporting Goods"</span>, price: "$29.<span style="color: #a45bad;">99</span>", stocked: <span style="color: #a45bad;">false</span>, name: <span style="color: #2d9574;">"Basketball"</span><span style="color: #bc6ec5;">}</span>,
+  <span style="color: #bc6ec5;">{</span>category: <span style="color: #2d9574;">"Electronics"</span>, price: "$99.<span style="color: #a45bad;">99</span>", stocked: <span style="color: #a45bad;">true</span>, name: <span style="color: #2d9574;">"iPod Touch"</span><span style="color: #bc6ec5;">}</span>,
+  <span style="color: #bc6ec5;">{</span>category: <span style="color: #2d9574;">"Electronics"</span>, price: "$399.<span style="color: #a45bad;">99</span>", stocked: <span style="color: #a45bad;">false</span>, name: "iPhone <span style="color: #a45bad;">5</span>"<span style="color: #bc6ec5;">}</span>,
+  <span style="color: #bc6ec5;">{</span>category: <span style="color: #2d9574;">"Electronics"</span>, price: "$199.<span style="color: #a45bad;">99</span>", stocked: <span style="color: #a45bad;">true</span>, name: "Nexus <span style="color: #a45bad;">7</span>"<span style="color: #bc6ec5;">}</span>
+<span style="color: #4f97d7;">]</span>;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline25" class="outline-3">
+<h3 id="orgheadline25"><span class="section-number-3">2.1</span> 拆分UI成组件结构</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+首先你会想在每个组件和子组件上画框框。并且给他们命名。如果你和一个设计师一起工作，他们可能已经帮你做了这些。所以，走去和他们交流。他们的PS图层名称可以作为你的React组件名。
+</p>
+
+<p>
+但你怎么知道哪些应该成为它自己的组件。同样的原理，何时你觉得应该创建一个函数和对象。其中一个原理就是 <code>单一职责原则</code> 也就是，一个组件最好只做一件事，如果它持续增长，它就应该拆分成更小的子组件。
+因为你经常展示JSON数据，你会发现如果你的model构建正确，你的UI（就是你的组件结构）也会同样的美观。因为UI和data model将粘附在同样的信息结构上，这意味着
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: 林晨&lt;lc1990linux@gmail.com&gt;</p>
+<p class="date">Created: 2016-04-23 Sat 18:22</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
