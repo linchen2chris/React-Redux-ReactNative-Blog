@@ -1,0 +1,103 @@
+#+TITLE: react-native linux 开发环境配置
+
+* oracle JDK 安装
+** 下载oracle JDK, 解压到　=/usr/lib/jvm=
+#+BEGIN_SRC sh
+sudo mkdir /usr/lib/jvm
+tar zxvf ./jdk-8u92-linux-x64.tar.gz -C /usr/lib/jvm
+#+END_SRC
+** 修改 .bashrc
+#+BEGIN_SRC sh
+export ANDROID_HOME='/usr/lib/android-sdk'
+export JAVA_HOME='/usr/lib/jvm/jdk1.8.0_92'
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=${JAVA_HOME}/bin:$PATH
+#+END_SRC
+** 如果之前安装过openJDK, 要替换一下
+#+BEGIN_SRC sh
+sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk-7/bin/java 300
+sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk-7/bin/javac 300
+sudo update-alternatives --config java
+#+END_SRC
+选择oracle jdk即可
+
+* android JDK 安装 (翻 lantern 墙环境)
+ubuntu 16.04下apt-get源有android-sdk,但不全,我选择了用android studio来安装 android sdk.
+下载运行android-studio.
+安装SDK platform
+[[file:react-native-linux开发环境搭建.org_imgs/20160505_112129_7877nt2.png]]
+
+SDK tools
+[[file:react-native-linux开发环境搭建.org_imgs/20160505_112301_7877Z3F.png]]
+
+#+BEGIN_QUOTE
+注意: 如果你像我一样使用 系统路径 /usr/lib/android-sdk, 运行android-studio的时候要sudo
+#+END_QUOTE 
+
+* 安装node,npm,watchman,flow
+#+BEGIN_SRC sh
+sudo apt-get install -y nodejs
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+#+END_SRC
+
+#+BEGIN_SRC sh
+sudo apt-get install -y automake python-dev
+git clone https://github.com/facebook/watchman.git
+cd watchman
+git checkout v4.5.0  # the latest stable release
+./autogen.sh
+./configure
+make
+sudo make install
+#+END_SRC
+
+#+BEGIN_SRC sh
+sudo npm install -g flow-bin
+#+END_SRC
+
+* 安装React Native 
+#+BEGIN_SRC sh
+sudo npm install -g react-native-cli
+#+END_SRC
+** 连接android手机
+#+BEGIN_SRC sh
+chris2@W530-chris:~$ lsusb
+Bus 002 Device 002: ID 8087:0024 Intel Corp. Integrated Rate Matching Hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 004: ID 04f2:b2ea Chicony Electronics Co., Ltd Integrated Camera [ThinkPad]
+Bus 001 Device 003: ID 147e:2020 Upek TouchChip Fingerprint Coprocessor (WBF advanced mode)
+Bus 001 Device 005: ID 04e8:6860 Samsung Electronics Co., Ltd Galaxy (MTP)
+Bus 001 Device 002: ID 8087:0024 Intel Corp. Integrated Rate Matching Hub
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 003 Device 002: ID 17ef:6050 Lenovo 
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+#+END_SRC
+
+我的三星手机记下ID: 04e8:6860 
+#+BEGIN_SRC sh
+echo SUBSYSTEM=="usb", ATTR{idVendor}=="04e8", MODE="6860", GROUP="plugdev" | sudo tee /etc/udev/rules.d/51-android-usb.rules
+#+END_SRC
+
+确认设备连上
+#+BEGIN_SRC sh
+chris2@W530-chris:~$ adb devices
+List of devices attached
+940497a2	device
+#+END_SRC
+
+* 运行测试程序AwesomeProject
+#+BEGIN_SRC sh
+react-native init AwesomeProject
+cd AwesomeProject
+react-native run-android
+#+END_SRC
+在电脑上运行
+#+BEGIN_SRC sh
+cd AwesomeProject
+react-native start
+#+END_SRC
+之后在手机上打开 AwesomeProject
+运行截图如下
+[[file:react-native-linux开发环境搭建.org_imgs/645031897.jpg]]
