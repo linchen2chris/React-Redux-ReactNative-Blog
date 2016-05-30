@@ -1,7 +1,21 @@
 #+TITLE: React 官方文档翻译
 #+AUTHOR: 林晨<lc1990linux@gmail.com>
-
+#+LATEX_CMD: xelatex
+#+LATEX_HEADER: \setmainfont{Noto Sans CJK SC}
+#+LATEX_HEADER: \XeTeXlinebreaklocale "zh"
+#+LATEX_HEADER: \XeTeXlinebreakskip = 0pt plus 1pt
+#+LATEX_HEADER: \definecolor{softgreen}{rgb}{0.78,0.93,0.8}
+#+LATEX_HEADER: \pagecolor{softgreen}
+#+LATEX_HEADER: \pagestyle{fancy}                    
+#+LATEX_HEADER: \lhead{page \thepage\ of \pageref{LastPage}}                    
+#+LATEX_HEADER: \rhead{\small\leftmark}                                                
+#+LATEX_HEADER: \cfoot{\thepage}                                                
+#+LATEX_HEADER: \renewcommand{\headrulewidth}{1pt}  
+#+LATEX_HEADER: \setlength{\skip\footins}{0.5cm}   
+#+LATEX_HEADER: \renewcommand{\footnotesize}{}
+#+LATEX_HEADER: \renewcommand{\footrulewidth}{1pt} 
 #+SETUPFILE: theme-readtheorg.setup
+
 * 案例学习
 我们将构建一个简单实用的评论箱，你可以把它放到博客里。并提供实时评论。
 我们将提供：

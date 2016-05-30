@@ -1,1 +1,9 @@
 .#*
+*.aux
+*.out
+*.log
+*.toc
+*.fls
+*.sty
+*.fdb_latexmk
+*.tex
